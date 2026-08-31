@@ -288,10 +288,12 @@ export class AIService {
   private static async processDeterministicFallback(userId: string, message: string): Promise<string> {
     const text = message.toLowerCase();
 
-    // Match simulatePurchase: "Can I buy a ₹12,000 phone?"
-    const buyMatch = text.match(/(?:buy|afford|purchase|cost|phone|macbook|laptop|gadget|spend)\s*(?:₹|rs\.?)?\s*([0-9,]+)/i);
-    if (buyMatch) {
-      const amount = parseFloat(buyMatch[1].replace(/,/g, ''));
+    // Match simulatePurchase: Check for buy keywords and extract number
+    const hasBuyKeyword = /(buy|afford|purchase|cost|spend|price|phone|macbook|laptop|gadget)/i.test(text);
+    const numberMatch = text.match(/([0-9,]+)/);
+    
+    if (hasBuyKeyword && numberMatch) {
+      const amount = parseFloat(numberMatch[1].replace(/,/g, ''));
       const sim = (await this.simulatePurchase(userId, amount, 'Gadgets')) as any;
       if (sim.error) return 'I could not access your account data.';
 
