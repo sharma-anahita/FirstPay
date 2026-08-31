@@ -11,6 +11,7 @@ describe('Recommendation Engine Core Calculations', () => {
   // Helper to construct a future date in months
   const getFutureDate = (months: number): Date => {
     const d = new Date();
+    d.setDate(15); // Set to middle of month to avoid month end rollover overflows
     d.setMonth(d.getMonth() + months);
     return d;
   };

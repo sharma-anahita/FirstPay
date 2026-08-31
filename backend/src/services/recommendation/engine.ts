@@ -240,7 +240,7 @@ export class RecommendationEngine {
 
       // Hard Safety Constraint: check if we exceed possible bounds
       const actualSavingsLimit = state.monthlyIncome * 0.75; // cannot recommend saving >75% of income
-      const monthlySavingTarget = Math.round(Math.min(newSurplus, actualSavingsLimit));
+      const monthlySavingTarget = Math.max(0, Math.round(Math.min(newSurplus, actualSavingsLimit)));
 
       // 2. Project timeline
       let monthsNeeded = monthlySavingTarget > 0 ? Math.ceil(gap / monthlySavingTarget) : 999;
@@ -252,7 +252,7 @@ export class RecommendationEngine {
       const isAchievedOnTime = monthsNeeded <= monthsRemaining;
 
       // 3. Evaluate safety buffer levels
-      const safetyBufferRatio = currentNeeds > 0 ? state.currentBalance / currentNeeds : 0;
+      const safetyBufferRatio = currentNeeds > 0 ? Math.max(0, state.currentBalance / currentNeeds) : 0;
       const isBufferMaintained = state.currentBalance >= state.minimumSafetyBuffer;
 
       // Feasibility class

@@ -208,11 +208,11 @@ export default function App() {
         setCurrentUser(json.data.user);
         
         // Populate profile settings states
-        setProfileName(json.data.user.name);
-        setProfileIncome(json.data.user.monthlyIncome.toString());
-        setProfileBuffer(json.data.financialHealth.safetyBufferTargetMonths.toString());
-        setProfileExp(json.data.user.experienceLevel);
-        setProfileEmployment(json.data.user.employmentType);
+        setProfileName(json.data.user?.name || '');
+        setProfileIncome(json.data.user?.monthlyIncome?.toString() || '0');
+        setProfileBuffer(json.data.financialHealth?.safetyBufferTargetMonths?.toString() || '3');
+        setProfileExp(json.data.user?.experienceLevel || 'beginner');
+        setProfileEmployment(json.data.user?.employmentType || 'student');
       }
 
       // Fetch Goals
