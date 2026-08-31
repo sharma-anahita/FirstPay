@@ -161,7 +161,7 @@ export class AIService {
     await AuditLog.create({
       userId,
       action: 'ai_chat_query',
-      entityType: 'AI_Assistant',
+      entityType: 'System',
       inputSnapshot: { message },
       output: { hasApiKey: !!apiKey }
     });
